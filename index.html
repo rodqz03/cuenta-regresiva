@@ -1,0 +1,801 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cuenta Regresiva</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: #020617;
+        }
+
+        /* FONDO */
+        .background {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(2, 6, 23, 0.65),
+                    rgba(2, 6, 23, 0.82)
+                ),
+                url("https://www.palladiumhotelgroup.com/content/dam/palladium/images/hoteles/republica-dominicana/punta-cana/hotel/piscinas/grand-palladium-punta-cana-resort/piscina-saona/palladium-20180116-153050-088-1-.jpg?preferwebp=true&quality=65");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            animation: zoomFondo 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes zoomFondo {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.08);
+            }
+        }
+
+        /* CAPA DE COLOR */
+        .overlay {
+            position: fixed;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(139, 92, 246, 0.25),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(6, 182, 212, 0.20),
+                    transparent 35%
+                );
+
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* CONTENEDOR */
+        .container {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+        /* TARJETA */
+        .card {
+            width: 100%;
+            max-width: 1000px;
+
+            padding: 50px 45px;
+
+            text-align: center;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+
+            animation: aparecer 1s ease;
+        }
+
+        /* ETIQUETA */
+        .badge {
+            display: inline-block;
+
+            padding: 8px 18px;
+            margin-bottom: 22px;
+
+            border-radius: 50px;
+
+            background: rgba(139, 92, 246, 0.18);
+
+            border: 1px solid rgba(167, 139, 250, 0.4);
+
+            color: #ddd6fe;
+
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* TÍTULO */
+        h1 {
+            font-size: clamp(40px, 7vw, 85px);
+
+            line-height: 0.95;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 20px;
+
+            font-weight: 900;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #ffffff,
+                    #c4b5fd,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* DESCRIPCIÓN */
+        .description {
+            color: #cbd5e1;
+
+            font-size: 16px;
+            line-height: 1.6;
+
+            margin-bottom: 40px;
+        }
+
+        .description strong {
+            color: white;
+        }
+
+        /* CONTADOR */
+        .countdown {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 18px;
+
+            max-width: 850px;
+
+            margin: 0 auto 35px;
+        }
+
+        /* CAJAS */
+        .time-box {
+            padding: 28px 10px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.13),
+                    rgba(255, 255, 255, 0.04)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.25);
+
+            transition: 0.3s;
+        }
+
+        .time-box:hover {
+            transform: translateY(-8px);
+
+            border-color: #8b5cf6;
+
+            box-shadow:
+                0 20px 50px rgba(139, 92, 246, 0.3);
+        }
+
+        /* NÚMEROS */
+        .number {
+            display: block;
+
+            font-size: clamp(35px, 6vw, 70px);
+
+            font-weight: 900;
+
+            line-height: 1;
+
+            color: white;
+        }
+
+        /* ETIQUETAS */
+        .label {
+            display: block;
+
+            margin-top: 12px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+        }
+
+        /* FECHA */
+        .date {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 22px;
+
+            border-radius: 50px;
+
+            background: rgba(139, 92, 246, 0.14);
+
+            border: 1px solid rgba(167, 139, 250, 0.3);
+
+            color: #ddd6fe;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        /* PROGRESO */
+        .progress-container {
+            max-width: 850px;
+
+            margin: 35px auto 0;
+
+            text-align: left;
+        }
+
+        .progress-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+        #percentage {
+            color: #c4b5fd;
+
+            font-weight: bold;
+        }
+
+        .progress-track {
+            width: 100%;
+
+            height: 7px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border-radius: 50px;
+
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: 50px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8b5cf6,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 0 18px rgba(139, 92, 246, 0.8);
+
+            transition: width 1s linear;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 25px;
+
+            color: #64748b;
+
+            font-size: 11px;
+        }
+
+        /* ANIMACIÓN */
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(30px)
+                    scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        /* CUANDO TERMINA */
+        .finished {
+            grid-column: 1 / -1;
+
+            padding: 40px;
+
+            border-radius: 25px;
+
+            background: rgba(6, 182, 212, 0.12);
+
+            border: 1px solid rgba(34, 211, 238, 0.4);
+
+            color: #67e8f9;
+
+            font-size: 28px;
+
+            font-weight: 900;
+        }
+
+        /* TABLET */
+        @media (max-width: 750px) {
+            .card {
+                padding: 40px 25px;
+            }
+
+            .countdown {
+                gap: 10px;
+            }
+
+            .time-box {
+                padding: 24px 8px;
+            }
+        }
+
+        /* CELULAR */
+        @media (max-width: 600px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .container {
+                padding: 15px;
+                min-height: 100vh;
+            }
+
+            .card {
+                padding: 35px 15px;
+                border-radius: 22px;
+            }
+
+            .badge {
+                font-size: 9px;
+                letter-spacing: 1.5px;
+                padding: 8px 12px;
+            }
+
+            h1 {
+                font-size: 42px;
+                letter-spacing: -2px;
+            }
+
+            .description {
+                font-size: 13px;
+                margin-bottom: 30px;
+            }
+
+            .countdown {
+                gap: 6px;
+                margin-bottom: 25px;
+            }
+
+            .time-box {
+                padding: 20px 5px;
+                border-radius: 15px;
+            }
+
+            .number {
+                font-size: 27px;
+            }
+
+            .label {
+                font-size: 7px;
+                letter-spacing: 1px;
+            }
+
+            .date {
+                font-size: 10px;
+                padding: 10px 15px;
+            }
+
+            .progress-container {
+                margin-top: 25px;
+            }
+
+            footer {
+                margin-top: 20px;
+            }
+        }
+
+        /* TELÉFONOS MUY PEQUEÑOS */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .number {
+                font-size: 23px;
+            }
+
+            .label {
+                font-size: 6px;
+            }
+
+            .time-box {
+                padding: 18px 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FONDO -->
+    <div class="background"></div>
+
+    <!-- CAPA DE COLOR -->
+    <div class="overlay"></div>
+
+    <!-- CONTENIDO -->
+    <main class="container">
+
+        <section class="card">
+
+            <div class="badge">
+                ⏳ CUENTA REGRESIVA ACTIVA
+            </div>
+
+            <h1>
+                El gran día
+                <br>
+                se acerca.
+            </h1>
+
+            <p class="description">
+                Cada segundo nos acerca más al
+                <strong>30 de octubre de 2026</strong>
+                <br>
+                Prepárate para una experiencia inolvidable.
+            </p>
+
+            <!-- CONTADOR -->
+            <div class="countdown" id="countdown">
+
+                <div class="time-box">
+                    <span class="number" id="days">00</span>
+                    <span class="label">DÍAS</span>
+                </div>
+
+                <div class="time-box">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">HORAS</span>
+                </div>
+
+                <div class="time-box">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">MINUTOS</span>
+                </div>
+
+                <div class="time-box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">SEGUNDOS</span>
+                </div>
+
+            </div>
+
+            <!-- FECHA -->
+            <div class="date">
+                📅
+                30 DE OCTUBRE DE 2026
+            </div>
+
+            <!-- PROGRESO -->
+            <div class="progress-container">
+
+                <div class="progress-info">
+                    <span>PROGRESO</span>
+
+                    <span id="percentage">
+                        0%
+                    </span>
+                </div>
+
+                <div class="progress-track">
+                    <div
+                        class="progress"
+                        id="progress">
+                    </div>
+                </div>
+
+            </div>
+
+            <footer>
+                Cada segundo cuenta. ⏰
+            </footer>
+
+        </section>
+
+    </main>
+
+    <script>
+        /*
+        ==================================================
+        FECHA FINAL
+        ==================================================
+
+        30 de octubre de 2026 a las 00:00:00
+        */
+
+        const fechaFinal =
+            new Date("2026-10-30T00:00:00").getTime();
+
+
+        /*
+        ==================================================
+        FECHA INICIAL
+        ==================================================
+
+        11 de agosto de 2026 a las 00:00:00
+        */
+
+        const fechaInicial =
+            new Date("2026-08-11T00:00:00").getTime();
+
+
+        /*
+        ==================================================
+        ELEMENTOS
+        ==================================================
+        */
+
+        const days =
+            document.getElementById("days");
+
+        const hours =
+            document.getElementById("hours");
+
+        const minutes =
+            document.getElementById("minutes");
+
+        const seconds =
+            document.getElementById("seconds");
+
+        const countdown =
+            document.getElementById("countdown");
+
+        const progress =
+            document.getElementById("progress");
+
+        const percentage =
+            document.getElementById("percentage");
+
+
+        /*
+        ==================================================
+        FUNCIÓN PRINCIPAL
+        ==================================================
+        */
+
+        function actualizar() {
+
+            const ahora =
+                new Date().getTime();
+
+
+            const diferencia =
+                fechaFinal - ahora;
+
+
+            /*
+            ==============================================
+            SI LA CUENTA TERMINÓ
+            ==============================================
+            */
+
+            if (diferencia <= 0) {
+
+                countdown.innerHTML = `
+                    <div class="finished">
+                        🎉
+                        <br><br>
+                        ¡EL GRAN DÍA
+                        HA LLEGADO!
+                    </div>
+                `;
+
+                progress.style.width = "100%";
+
+                percentage.innerText = "100%";
+
+                return;
+            }
+
+
+            /*
+            ==============================================
+            CÁLCULO DE DÍAS
+            ==============================================
+            */
+
+            const d =
+                Math.floor(
+                    diferencia /
+                    (1000 * 60 * 60 * 24)
+                );
+
+
+            /*
+            ==============================================
+            CÁLCULO DE HORAS
+            ==============================================
+            */
+
+            const h =
+                Math.floor(
+                    (
+                        diferencia %
+                        (1000 * 60 * 60 * 24)
+                    )
+                    /
+                    (1000 * 60 * 60)
+                );
+
+
+            /*
+            ==============================================
+            CÁLCULO DE MINUTOS
+            ==============================================
+            */
+
+            const m =
+                Math.floor(
+                    (
+                        diferencia %
+                        (1000 * 60 * 60)
+                    )
+                    /
+                    (1000 * 60)
+                );
+
+
+            /*
+            ==============================================
+            CÁLCULO DE SEGUNDOS
+            ==============================================
+            */
+
+            const s =
+                Math.floor(
+                    (
+                        diferencia %
+                        (1000 * 60)
+                    )
+                    /
+                    1000
+                );
+
+
+            /*
+            ==============================================
+            MOSTRAR RESULTADOS
+            ==============================================
+            */
+
+            days.innerText =
+                String(d).padStart(2, "0");
+
+            hours.innerText =
+                String(h).padStart(2, "0");
+
+            minutes.innerText =
+                String(m).padStart(2, "0");
+
+            seconds.innerText =
+                String(s).padStart(2, "0");
+
+
+            /*
+            ==============================================
+            BARRA DE PROGRESO
+            ==============================================
+            */
+
+            const total =
+                fechaFinal - fechaInicial;
+
+            const transcurrido =
+                ahora - fechaInicial;
+
+
+            let porcentaje =
+                (transcurrido / total) * 100;
+
+
+            porcentaje =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        porcentaje
+                    )
+                );
+
+
+            progress.style.width =
+                porcentaje + "%";
+
+            percentage.innerText =
+                porcentaje.toFixed(1) + "%";
+        }
+
+
+        /*
+        ==================================================
+        INICIAR CONTADOR
+        ==================================================
+        */
+
+        actualizar();
+
+        setInterval(
+            actualizar,
+            1000
+        );
+
+    </script>
+
+</body>
+
+</html>
+```
+
+
