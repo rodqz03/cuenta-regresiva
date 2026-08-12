@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -23,7 +22,10 @@
             background: #020617;
         }
 
-        /* FONDO */
+        /* ==================================================
+           FONDO
+        ================================================== */
+
         .background {
             position: fixed;
             inset: 0;
@@ -33,8 +35,8 @@
 
             background-image:
                 linear-gradient(
-                    rgba(2, 6, 23, 0.65),
-                    rgba(2, 6, 23, 0.82)
+                    rgba(2, 6, 23, 0.18),
+                    rgba(2, 6, 23, 0.30)
                 ),
                 url("https://www.palladiumhotelgroup.com/content/dam/palladium/images/hoteles/republica-dominicana/punta-cana/hotel/piscinas/grand-palladium-punta-cana-resort/piscina-saona/palladium-20180116-153050-088-1-.jpg?preferwebp=true&quality=65");
 
@@ -42,7 +44,10 @@
             background-position: center;
             background-repeat: no-repeat;
 
-            animation: zoomFondo 20s ease-in-out infinite alternate;
+            animation: zoomFondo 25s ease-in-out infinite alternate;
+
+            /* Mejora la visibilidad de la fotografía */
+            filter: brightness(1.08) saturate(1.08);
         }
 
         @keyframes zoomFondo {
@@ -51,32 +56,40 @@
             }
 
             to {
-                transform: scale(1.08);
+                transform: scale(1.06);
             }
         }
 
-        /* CAPA DE COLOR */
+
+        /* ==================================================
+           CAPA DE COLOR
+        ================================================== */
+
         .overlay {
             position: fixed;
             inset: 0;
 
             background:
                 radial-gradient(
-                    circle at 20% 20%,
-                    rgba(139, 92, 246, 0.25),
-                    transparent 35%
+                    circle at 15% 15%,
+                    rgba(139, 92, 246, 0.10),
+                    transparent 30%
                 ),
                 radial-gradient(
-                    circle at 80% 80%,
-                    rgba(6, 182, 212, 0.20),
-                    transparent 35%
+                    circle at 85% 85%,
+                    rgba(6, 182, 212, 0.08),
+                    transparent 30%
                 );
 
             z-index: 1;
             pointer-events: none;
         }
 
-        /* CONTENEDOR */
+
+        /* ==================================================
+           CONTENEDOR
+        ================================================== */
+
         .container {
             position: relative;
             z-index: 2;
@@ -91,7 +104,11 @@
             padding: 25px;
         }
 
-        /* TARJETA */
+
+        /* ==================================================
+           TARJETA
+        ================================================== */
+
         .card {
             width: 100%;
             max-width: 1000px;
@@ -100,23 +117,28 @@
 
             text-align: center;
 
+            /* Más transparente para que se vea el fondo */
+            background: rgba(15, 23, 42, 0.45);
+
+            border: 1px solid rgba(255, 255, 255, 0.22);
+
             border-radius: 30px;
 
-            background: rgba(255, 255, 255, 0.09);
-
-            border: 1px solid rgba(255, 255, 255, 0.18);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
 
             box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.55),
+                0 30px 80px rgba(0, 0, 0, 0.40),
                 inset 0 1px 1px rgba(255, 255, 255, 0.15);
 
             animation: aparecer 1s ease;
         }
 
-        /* ETIQUETA */
+
+        /* ==================================================
+           ETIQUETA
+        ================================================== */
+
         .badge {
             display: inline-block;
 
@@ -125,18 +147,24 @@
 
             border-radius: 50px;
 
-            background: rgba(139, 92, 246, 0.18);
+            background: rgba(139, 92, 246, 0.20);
 
-            border: 1px solid rgba(167, 139, 250, 0.4);
+            border: 1px solid rgba(167, 139, 250, 0.45);
 
-            color: #ddd6fe;
+            color: #ede9fe;
 
             font-size: 11px;
             font-weight: bold;
             letter-spacing: 2px;
+
+            backdrop-filter: blur(5px);
         }
 
-        /* TÍTULO */
+
+        /* ==================================================
+           TÍTULO
+        ================================================== */
+
         h1 {
             font-size: clamp(40px, 7vw, 85px);
 
@@ -152,31 +180,46 @@
                 linear-gradient(
                     100deg,
                     #ffffff,
-                    #c4b5fd,
-                    #67e8f9
+                    #ddd6fe,
+                    #a5f3fc
                 );
 
             -webkit-background-clip: text;
             background-clip: text;
 
             -webkit-text-fill-color: transparent;
+
+            /* Sombra para destacar sobre la fotografía */
+            filter:
+                drop-shadow(0 5px 15px rgba(0, 0, 0, 0.45));
         }
 
-        /* DESCRIPCIÓN */
+
+        /* ==================================================
+           DESCRIPCIÓN
+        ================================================== */
+
         .description {
-            color: #cbd5e1;
+            color: #e2e8f0;
 
             font-size: 16px;
             line-height: 1.6;
 
             margin-bottom: 40px;
+
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .description strong {
             color: white;
         }
 
-        /* CONTADOR */
+
+        /* ==================================================
+           CONTADOR
+        ================================================== */
+
         .countdown {
             display: grid;
 
@@ -189,7 +232,11 @@
             margin: 0 auto 35px;
         }
 
-        /* CAJAS */
+
+        /* ==================================================
+           CAJAS
+        ================================================== */
+
         .time-box {
             padding: 28px 10px;
 
@@ -198,14 +245,17 @@
             background:
                 linear-gradient(
                     145deg,
-                    rgba(255, 255, 255, 0.13),
-                    rgba(255, 255, 255, 0.04)
+                    rgba(255, 255, 255, 0.18),
+                    rgba(255, 255, 255, 0.07)
                 );
 
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.20);
 
             box-shadow:
                 0 15px 40px rgba(0, 0, 0, 0.25);
+
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
 
             transition: 0.3s;
         }
@@ -216,10 +266,14 @@
             border-color: #8b5cf6;
 
             box-shadow:
-                0 20px 50px rgba(139, 92, 246, 0.3);
+                0 20px 50px rgba(139, 92, 246, 0.35);
         }
 
-        /* NÚMEROS */
+
+        /* ==================================================
+           NÚMEROS
+        ================================================== */
+
         .number {
             display: block;
 
@@ -230,15 +284,22 @@
             line-height: 1;
 
             color: white;
+
+            text-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.45);
         }
 
-        /* ETIQUETAS */
+
+        /* ==================================================
+           ETIQUETAS
+        ================================================== */
+
         .label {
             display: block;
 
             margin-top: 12px;
 
-            color: #94a3b8;
+            color: #cbd5e1;
 
             font-size: 10px;
 
@@ -247,7 +308,11 @@
             letter-spacing: 2px;
         }
 
-        /* FECHA */
+
+        /* ==================================================
+           FECHA
+        ================================================== */
+
         .date {
             display: inline-flex;
 
@@ -259,18 +324,24 @@
 
             border-radius: 50px;
 
-            background: rgba(139, 92, 246, 0.14);
+            background: rgba(139, 92, 246, 0.18);
 
-            border: 1px solid rgba(167, 139, 250, 0.3);
+            border: 1px solid rgba(167, 139, 250, 0.35);
 
-            color: #ddd6fe;
+            color: #ede9fe;
 
             font-size: 13px;
 
             font-weight: bold;
+
+            backdrop-filter: blur(7px);
         }
 
-        /* PROGRESO */
+
+        /* ==================================================
+           PROGRESO
+        ================================================== */
+
         .progress-container {
             max-width: 850px;
 
@@ -286,13 +357,13 @@
 
             margin-bottom: 9px;
 
-            color: #94a3b8;
+            color: #cbd5e1;
 
             font-size: 11px;
         }
 
         #percentage {
-            color: #c4b5fd;
+            color: #ddd6fe;
 
             font-weight: bold;
         }
@@ -302,7 +373,7 @@
 
             height: 7px;
 
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.12);
 
             border-radius: 50px;
 
@@ -329,16 +400,27 @@
             transition: width 1s linear;
         }
 
-        /* FOOTER */
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
         footer {
             margin-top: 25px;
 
-            color: #64748b;
+            color: #cbd5e1;
 
             font-size: 11px;
+
+            text-shadow:
+                0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
-        /* ANIMACIÓN */
+
+        /* ==================================================
+           ANIMACIÓN
+        ================================================== */
+
         @keyframes aparecer {
             from {
                 opacity: 0;
@@ -357,7 +439,11 @@
             }
         }
 
-        /* CUANDO TERMINA */
+
+        /* ==================================================
+           CUANDO TERMINA
+        ================================================== */
+
         .finished {
             grid-column: 1 / -1;
 
@@ -365,7 +451,7 @@
 
             border-radius: 25px;
 
-            background: rgba(6, 182, 212, 0.12);
+            background: rgba(6, 182, 212, 0.15);
 
             border: 1px solid rgba(34, 211, 238, 0.4);
 
@@ -376,8 +462,13 @@
             font-weight: 900;
         }
 
-        /* TABLET */
+
+        /* ==================================================
+           TABLET
+        ================================================== */
+
         @media (max-width: 750px) {
+
             .card {
                 padding: 40px 25px;
             }
@@ -391,8 +482,13 @@
             }
         }
 
-        /* CELULAR */
+
+        /* ==================================================
+           CELULAR
+        ================================================== */
+
         @media (max-width: 600px) {
+
             body {
                 overflow-y: auto;
             }
@@ -405,6 +501,9 @@
             .card {
                 padding: 35px 15px;
                 border-radius: 22px;
+
+                /* En móvil dejamos ver más el fondo */
+                background: rgba(15, 23, 42, 0.38);
             }
 
             .badge {
@@ -456,8 +555,13 @@
             }
         }
 
-        /* TELÉFONOS MUY PEQUEÑOS */
+
+        /* ==================================================
+           TELÉFONOS MUY PEQUEÑOS
+        ================================================== */
+
         @media (max-width: 380px) {
+
             h1 {
                 font-size: 36px;
             }
@@ -477,15 +581,26 @@
     </style>
 </head>
 
+
 <body>
 
-    <!-- FONDO -->
+    <!-- ==================================================
+         FONDO
+    ================================================== -->
+
     <div class="background"></div>
 
-    <!-- CAPA DE COLOR -->
+    <!-- ==================================================
+         CAPA DE COLOR
+    ================================================== -->
+
     <div class="overlay"></div>
 
-    <!-- CONTENIDO -->
+
+    <!-- ==================================================
+         CONTENIDO
+    ================================================== -->
+
     <main class="container">
 
         <section class="card">
@@ -494,20 +609,26 @@
                 ⏳ CUENTA REGRESIVA ACTIVA
             </div>
 
+
             <h1>
                 El gran día
                 <br>
                 se acerca.
             </h1>
 
+
             <p class="description">
                 Cada segundo nos acerca más al
-                <strong>30 de octubre de 2026</strong>
+                <strong>Grand Palladium Punta Cana Resort & Spa</strong>
                 <br>
                 Prepárate para una experiencia inolvidable.
             </p>
 
-            <!-- CONTADOR -->
+
+            <!-- ==================================================
+                 CONTADOR
+            ================================================== -->
+
             <div class="countdown" id="countdown">
 
                 <div class="time-box">
@@ -532,13 +653,21 @@
 
             </div>
 
-            <!-- FECHA -->
+
+            <!-- ==================================================
+                 FECHA
+            ================================================== -->
+
             <div class="date">
                 📅
                 30 DE OCTUBRE DE 2026
             </div>
 
-            <!-- PROGRESO -->
+
+            <!-- ==================================================
+                 PROGRESO
+            ================================================== -->
+
             <div class="progress-container">
 
                 <div class="progress-info">
@@ -550,13 +679,16 @@
                 </div>
 
                 <div class="progress-track">
+
                     <div
                         class="progress"
                         id="progress">
                     </div>
+
                 </div>
 
             </div>
+
 
             <footer>
                 Cada segundo cuenta. ⏰
@@ -566,13 +698,17 @@
 
     </main>
 
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
     <script>
+
         /*
         ==================================================
         FECHA FINAL
         ==================================================
-
-        30 de octubre de 2026 a las 00:00:00
         */
 
         const fechaFinal =
@@ -583,8 +719,6 @@
         ==================================================
         FECHA INICIAL
         ==================================================
-
-        11 de agosto de 2026 a las 00:00:00
         */
 
         const fechaInicial =
@@ -662,7 +796,7 @@
 
             /*
             ==============================================
-            CÁLCULO DE DÍAS
+            DÍAS
             ==============================================
             */
 
@@ -675,7 +809,7 @@
 
             /*
             ==============================================
-            CÁLCULO DE HORAS
+            HORAS
             ==============================================
             */
 
@@ -692,7 +826,7 @@
 
             /*
             ==============================================
-            CÁLCULO DE MINUTOS
+            MINUTOS
             ==============================================
             */
 
@@ -709,7 +843,7 @@
 
             /*
             ==============================================
-            CÁLCULO DE SEGUNDOS
+            SEGUNDOS
             ==============================================
             */
 
@@ -796,6 +930,3 @@
 </body>
 
 </html>
-```
-
-
